@@ -89,6 +89,16 @@ def train(args):
                                                                         force_download=args.force_download,
                                                                         reprocess_data=args.reprocess_data)
     print('data loaded...')
+    
+    ### storing indices ###
+    ind = []
+    for i in dataloaders['train']:
+        ind.append(i['index'])
+    ind_tensor = torch.cat(ind)
+    torch.save(ind_tensor, args.ckpt_dir+'/indices.pt')
+    print('indices stored...')
+    ### storing indices ###
+
     args.vocab = data_args.vocab
     args.inv_vocab = data_args.inv_vocab
     args.vocab_weights = data_args.vocab_weights.to(args.device)
